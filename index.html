@@ -1,21 +1,455 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name=viewport content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ravel Mello — Senior Backend Engineer</title>
+<meta name="description" content="Ravel Mello — Senior Backend Engineer. Java, Spring Boot, microsserviços, mensageria e engenharia de software com IA.">
+<meta property="og:title" content="Ravel Mello — Senior Backend Engineer">
+<meta property="og:description" content="Desenvolvo soluções escaláveis e inteligentes com foco em performance e negócios.">
+<meta property="og:image" content="https://ravelmello.github.io/banner.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23000'/><text x='32' y='43' font-family='Arial' font-size='26' fill='%23F06A35' text-anchor='middle'>RM</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=Spectral:ital,wght@0,300;0,400;1,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #000;
+  --text: #fff;
+  --muted: rgba(255, 255, 255, 0.58);
+  --dim: rgba(255, 255, 255, 0.34);
+  --line: rgba(255, 255, 255, 0.14);
+  --accent: #F06A35;
+  --caps: 'Josefin Sans', system-ui, sans-serif;
+  --serif: 'Spectral', Georgia, serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --wrap: 1240px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--accent); color: #000; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 40px; }
 
-    <title>Ravel Mello | Home</title>
+.caps { font-family: var(--caps); text-transform: uppercase; letter-spacing: 0.18em; }
+.link-caps {
+  font-family: var(--caps); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--text); transition: color .2s, border-color .2s;
+}
+.link-caps:hover { color: var(--accent); border-color: var(--accent); }
 
-    <link rel="icon" href="./assets/custom/images/favicon.ico" type="image/x-icon"/>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+/* Header */
+header { position: fixed; inset: 0 0 auto; z-index: 50; transition: background .3s; }
+header.scrolled { background: rgba(0,0,0,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.nav { height: 84px; display: flex; align-items: center; justify-content: space-between; }
+.wordmark { font-family: var(--serif); font-size: 26px; font-weight: 300; letter-spacing: 0.01em; }
+.wordmark i { color: var(--accent); }
+.nav ul { display: flex; align-items: baseline; gap: 40px; list-style: none; }
+.nav ul a { font-family: var(--caps); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+.nav ul a:hover, .nav ul a.cv { color: var(--text); }
+.nav ul a.cv { color: var(--accent); }
+.cv-li { display: flex; align-items: baseline; gap: 10px; font-family: var(--caps); font-size: 13px; letter-spacing: 0.2em; color: var(--dim); }
+.cv-li .sep { letter-spacing: 0; }
+.nav ul a.cv:hover { color: var(--text); }
 
+/* Hero */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; overflow: hidden; }
+.hero-photo {
+  position: absolute; right: 0; bottom: 0; top: 96px; width: 52%;
+  pointer-events: none;
+}
+.hero-photo img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 28%), linear-gradient(0deg, transparent 0%, #000 22%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(90deg, transparent 0%, #000 28%), linear-gradient(0deg, transparent 0%, #000 22%);
+          mask-composite: intersect;
+}
+#wave { position: absolute; left: 0; bottom: 0; width: 70%; height: 55%; pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 40%, transparent 100%);
+          mask-image: linear-gradient(90deg, #000 0%, #000 40%, transparent 100%); }
+.hero > .wrap { width: 100%; }
+.hero-copy { position: relative; z-index: 1; max-width: 640px; padding: 140px 0 120px; }
+.hero .eyebrow { font-family: var(--caps); font-size: 14px; letter-spacing: .42em; text-transform: uppercase; color: var(--accent); }
+.hero h1 {
+  font-family: var(--caps); font-weight: 300; text-transform: uppercase;
+  font-size: clamp(56px, 8.4vw, 132px); line-height: .92; letter-spacing: 0.05em; margin: 26px 0 34px;
+}
+.hero h1 span { color: var(--accent); }
+.hero .lede { font-family: var(--serif); font-weight: 300; font-size: clamp(21px, 2vw, 27px); line-height: 1.4; max-width: 26ch; }
+.hero .lede i { color: var(--accent); }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 32px; margin-top: 44px; }
+.tags { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 48px; }
+.tags span { font-family: var(--caps); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.tags span::before { content: '/ '; color: var(--accent); }
+
+/* Section heads */
+section.block { padding: 150px 0; }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 80px; }
+.head h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(36px, 5vw, 68px); line-height: 1.08; max-width: 16ch; }
+.head h2 i { color: var(--accent); }
+.kicker { display: block; font-family: var(--caps); font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+
+/* Services */
+.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; }
+.service { border-top: 1px solid var(--line); padding-top: 32px; }
+.service h3 { font-family: var(--caps); font-weight: 400; font-size: 22px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; }
+.service h3 b { font-weight: 400; color: var(--accent); margin-right: 10px; }
+.service p { color: var(--muted); }
+
+/* Projects */
+.projects { list-style: none; border-top: 1px solid var(--line); }
+.project a {
+  display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 32px;
+  padding: 44px 0; border-bottom: 1px solid var(--line); transition: padding .35s ease;
+}
+.project .n { font-family: var(--caps); color: var(--dim); font-size: 15px; letter-spacing: .15em; }
+.project h3 { font-family: var(--caps); font-weight: 300; font-size: clamp(28px, 4.4vw, 60px); line-height: 1.05; text-transform: uppercase; letter-spacing: .04em; transition: color .3s; }
+.project .meta { display: block; margin-top: 12px; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--muted); text-transform: none; letter-spacing: 0; }
+.project .go { font-family: var(--caps); font-size: 13px; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; border-bottom: 1px solid currentColor; padding-bottom: 6px; }
+.project a:hover { padding-left: 16px; }
+.project a:hover h3, .project a:hover .go { color: var(--accent); }
+
+/* Now / studying */
+.now { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; }
+.step .big { font-family: var(--caps); font-weight: 300; font-size: 88px; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.35); }
+.step h3 { font-family: var(--serif); font-weight: 400; font-size: 28px; margin: 24px 0 14px; }
+.step p { color: var(--muted); }
+.step .chips { margin-top: 20px; font-family: var(--caps); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.updated { margin-top: 64px; font-family: var(--serif); font-style: italic; color: var(--dim); }
+
+/* Experience */
+.cases { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.case { padding: 40px 36px 44px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; transition: background .3s; }
+.case:hover { background: rgba(240, 106, 53, 0.05); }
+.case-sector { font-family: var(--caps); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--accent); }
+.case h3 { font-family: var(--serif); font-weight: 400; font-size: 27px; line-height: 1.2; margin: 18px 0 14px; }
+.case p { color: var(--muted); font-size: 15px; }
+.case-stack { margin-top: auto; padding-top: 24px; font-family: var(--caps); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+
+/* CTA */
+.cta { position: relative; padding: 170px 0 150px; text-align: center; border-top: 1px solid var(--line); overflow: hidden; }
+.cta::before { content: ''; position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(240,106,53,.16), transparent); pointer-events: none; }
+.cta h2 { position: relative; font-family: var(--serif); font-weight: 300; font-size: clamp(44px, 7vw, 104px); line-height: 1.02; }
+.cta h2 i { color: var(--accent); }
+.cta .btn {
+  position: relative; display: inline-block; margin-top: 56px;
+  font-family: var(--caps); font-size: 14px; letter-spacing: .24em; text-transform: uppercase;
+  padding: 22px 44px 19px; border: 1px solid var(--text); transition: all .25s;
+}
+.cta .btn:hover { background: var(--accent); border-color: var(--accent); color: #000; }
+.cta .row { position: relative; display: flex; justify-content: center; flex-wrap: wrap; gap: 20px 44px; margin-top: 64px; }
+
+footer { border-top: 1px solid var(--line); padding: 36px 0; }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+footer small { font-family: var(--caps); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); }
+.socials { display: flex; gap: 22px; }
+.socials a { color: var(--muted); transition: color .2s; }
+.socials a:hover { color: var(--accent); }
+.socials svg { width: 18px; height: 18px; display: block; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+@media (max-width: 960px) {
+  .nav ul li:not(:last-child) { display: none; }
+  .hero { align-items: flex-end; }
+  .hero-photo { width: 100%; height: 72%; top: 0; bottom: auto; }
+  .hero-photo img {
+    -webkit-mask-image: linear-gradient(0deg, transparent 0%, #000 45%);
+            mask-image: linear-gradient(0deg, transparent 0%, #000 45%);
+  }
+  #wave { width: 100%; }
+  .hero-photo { height: 62%; }
+  .hero-copy { padding: 58vh 0 80px; }
+  .head { flex-direction: column; align-items: start; }
+  .services, .now { grid-template-columns: 1fr; gap: 48px; }
+  .project a { grid-template-columns: 1fr; gap: 14px; }
+  .cases { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 0 20px; }
+  .hero .eyebrow { letter-spacing: .28em; font-size: 12px; }
+  section.block { padding: 100px 0; }
+  .step .big { font-size: 64px; }
+  .cases { grid-template-columns: 1fr; }
+  .case { padding: 32px 24px 36px; }
+  footer .wrap { flex-direction: column; }
+}
+</style>
 </head>
-<body class="boxed" style="height: 100%">
-  <app-root></app-root>
-  
- <script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="es2015-polyfills.js" nomodule></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="styles.js"></script><script type="text/javascript" src="scripts.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script></body>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="wordmark">ravel <i>mello</i></a>
+    <ul>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#agora">Agora</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li class="cv-li">
+        <span>CV</span>
+        <a class="cv" href="https://docs.google.com/document/d/17BPwTjwyavKiv4EFEo-hEbxiCGNbzoN0y1Gu627xPDE/export?format=pdf" download>PT</a>
+        <span class="sep">/</span>
+        <a class="cv" href="https://docs.google.com/document/d/1bg0SXu--BqdGhCB9kToVIZixWfJ4EGePXGLv-dGgpYI/export?format=pdf" download>EN</a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-photo"><img src="ravel-portrait.jpg" alt="Retrato de Ravel Mello"></div>
+    <canvas id="wave" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Senior Backend Engineer</p>
+        <h1>Ravel<br><span>Mello</span></h1>
+        <p class="lede">Desenvolvo soluções escaláveis e inteligentes com foco em <i>performance e negócios.</i></p>
+        <div class="tags">
+          <span>Java</span><span>Spring Boot</span><span>Microsserviços</span><span>APIs</span><span>Mensageria</span><span>IA</span><span>DevOps</span>
+        </div>
+        <div class="actions">
+          <a class="link-caps" href="https://www.linkedin.com/in/ravel-mello/" target="_blank" rel="noopener">LinkedIn →</a>
+          <a class="link-caps" href="https://docs.google.com/document/d/17BPwTjwyavKiv4EFEo-hEbxiCGNbzoN0y1Gu627xPDE/export?format=pdf" download>Currículo PT ↓</a>
+          <a class="link-caps" href="https://docs.google.com/document/d/1bg0SXu--BqdGhCB9kToVIZixWfJ4EGePXGLv-dGgpYI/export?format=pdf" download>Resume EN ↓</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="sobre">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="kicker">O que faço</span>
+          <h2>Backend, arquitetura e <i>IA</i> — de ponta a ponta.</h2>
+        </div>
+        <a class="link-caps" href="https://www.linkedin.com/in/ravel-mello/" target="_blank" rel="noopener">Ver LinkedIn →</a>
+      </div>
+      <div class="services">
+        <div class="service reveal">
+          <h3><b>01.</b>Backend</h3>
+          <p>APIs e microsserviços em Java e Spring Boot, mensageria e integrações pensadas para escalar e para durar.</p>
+        </div>
+        <div class="service reveal">
+          <h3><b>02.</b>Arquitetura</h3>
+          <p>Desenho de sistemas distribuídos, modelagem de dados em PostgreSQL e pipelines de entrega com Docker e Kubernetes.</p>
+        </div>
+        <div class="service reveal">
+          <h3><b>03.</b>Engenharia com IA</h3>
+          <p>Agentes e LLMs no ciclo inteiro de desenvolvimento — do código à revisão — com o mesmo rigor do resto do sistema.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="projetos">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="kicker">Projetos selecionados</span>
+          <h2>Código <i>aberto</i>, no GitHub.</h2>
+        </div>
+        <a class="link-caps" href="https://github.com/ravelmello?tab=repositories" target="_blank" rel="noopener">Ver todos →</a>
+      </div>
+      <ul class="projects">
+        <li class="project reveal">
+          <a href="https://github.com/ravelmello/investimentos-api" target="_blank" rel="noopener">
+            <span class="n">01</span>
+            <h3>Investimentos API<span class="meta">NestJS · TypeScript · arquitetura modular</span></h3>
+            <span class="go">Ver no GitHub</span>
+          </a>
+        </li>
+        <li class="project reveal">
+          <a href="https://github.com/ravelmello/card-payment-sample-java" target="_blank" rel="noopener">
+            <span class="n">02</span>
+            <h3>Card Payment<span class="meta">Java · Spring Boot · processamento de pagamentos</span></h3>
+            <span class="go">Ver no GitHub</span>
+          </a>
+        </li>
+        <li class="project reveal">
+          <a href="https://github.com/ravelmello" target="_blank" rel="noopener">
+            <span class="n">03</span>
+            <h3>Integrações MuleSoft<span class="meta">Anypoint · APIs corporativas · integração de sistemas</span></h3>
+            <span class="go">Ver no GitHub</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="agora">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="kicker">Agora</span>
+          <h2>O que estou <i>estudando</i> no momento.</h2>
+        </div>
+      </div>
+      <div class="now" id="now-list"></div>
+      <p class="updated reveal" id="now-updated"></p>
+    </div>
+  </section>
+
+  <section class="block" id="experiencia">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="kicker">Experiência</span>
+          <h2>Sistemas críticos, <i>em escala.</i></h2>
+        </div>
+        <p style="color:var(--muted);max-width:34ch">Mais de 10 anos em sistemas onde falhar não é opção — seguros, saúde, transporte e governo.</p>
+      </div>
+      <div class="cases">
+        <article class="case reveal">
+          <span class="case-sector">Seguros</span>
+          <h3>Porto Seguro</h3>
+          <p>Microsserviços críticos em Java e Spring Boot, com integrações distribuídas via RabbitMQ e Redis em ambientes AWS e GCP.</p>
+          <span class="case-stack">Spring Boot · RabbitMQ · Redis · AWS · GCP</span>
+        </article>
+        <article class="case reveal">
+          <span class="case-sector">Mobilidade urbana</span>
+          <h3>Bilhetagem do transporte de São Paulo</h3>
+          <p>Serviços backend e regras de negócio da plataforma de bilhetagem, com processamento de transações em larga escala.</p>
+          <span class="case-stack">Node.js · PL/SQL</span>
+        </article>
+        <article class="case reveal">
+          <span class="case-sector">Saúde</span>
+          <h3>Philips Tasy</h3>
+          <p>Modernização e internacionalização da plataforma hospitalar Tasy, integrando soluções on-premise à nuvem da Philips (HSDP).</p>
+          <span class="case-stack">Java · Kafka · RabbitMQ · AWS · React</span>
+        </article>
+        <article class="case reveal">
+          <span class="case-sector">Delivery</span>
+          <h3>iFood</h3>
+          <p>Liderança técnica de times, com foco em excelência de entrega, mentoria e evolução do processo de desenvolvimento.</p>
+          <span class="case-stack">Java · Angular · React · Node.js</span>
+        </article>
+        <article class="case reveal">
+          <span class="case-sector">Setor público</span>
+          <h3>Sistemas de governo</h3>
+          <p>Sistemas de alta disponibilidade para órgãos públicos, incluindo projetos para o Banco Central do Brasil e a Prefeitura de Manaus.</p>
+          <span class="case-stack">Java · Spring · AngularJS · JSF</span>
+        </article>
+        <article class="case reveal">
+          <span class="case-sector">Plataforma</span>
+          <h3>CI/CD e Kubernetes</h3>
+          <p>Migração de repositórios de SVN para GitLab, pipelines dinâmicos para múltiplos projetos e deploys modernizados com Kubernetes.</p>
+          <span class="case-stack">GitLab CI/CD · Kubernetes · Rancher</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contato">
+    <div class="wrap">
+      <span class="kicker reveal">Contato</span>
+      <h2 class="reveal">Vamos construir algo<br>que <i>escale.</i></h2>
+      <a class="btn reveal" href="https://www.linkedin.com/in/ravel-mello/" target="_blank" rel="noopener">Falar comigo</a>
+      <div class="row reveal">
+        <a class="link-caps" href="mailto:ravelmello3@gmail.com">E-mail</a>
+        <a class="link-caps" href="https://github.com/ravelmello" target="_blank" rel="noopener">GitHub</a>
+        <a class="link-caps" href="https://docs.google.com/document/d/17BPwTjwyavKiv4EFEo-hEbxiCGNbzoN0y1Gu627xPDE/export?format=pdf" download>Currículo PT</a>
+        <a class="link-caps" href="https://docs.google.com/document/d/1bg0SXu--BqdGhCB9kToVIZixWfJ4EGePXGLv-dGgpYI/export?format=pdf" download>Resume EN</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <small>© <span id="year"></span> Ravel Mello</small>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/ravel-mello/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+      <a href="https://github.com/ravelmello" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10 10 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg></a>
+      <a href="mailto:ravelmello3@gmail.com" aria-label="E-mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 6l9 7 9-7"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Edite aqui o que você está estudando — a seção "Agora" é gerada desta lista.
+const NOW = {
+  updated: '2026-10',
+  items: [
+    { title: 'Agentes de IA e MCP', text: 'Agentes que operam sobre sistemas reais: tool use, Model Context Protocol e orquestração com Claude.', chips: 'Claude · MCP · Agent SDK' },
+    { title: 'Arquitetura orientada a eventos', text: 'Mensageria, consistência eventual e padrões como outbox e saga para microsserviços resilientes.', chips: 'Kafka · RabbitMQ · Spring Cloud' },
+    { title: 'Observabilidade', text: 'Tracing distribuído, métricas e logs estruturados para entender sistemas antes que eles quebrem.', chips: 'OpenTelemetry · Grafana · Kubernetes' }
+  ]
+};
+
+(function renderNow() {
+  const list = document.getElementById('now-list');
+  NOW.items.forEach((it, i) => {
+    const el = document.createElement('div');
+    el.className = 'step reveal';
+    el.innerHTML = '<div class="big"></div><h3></h3><p></p><div class="chips"></div>';
+    el.querySelector('.big').textContent = String(i + 1).padStart(2, '0');
+    el.querySelector('h3').textContent = it.title;
+    el.querySelector('p').textContent = it.text;
+    el.querySelector('.chips').textContent = it.chips;
+    list.appendChild(el);
+  });
+  const [y, m] = NOW.updated.split('-');
+  document.getElementById('now-updated').textContent =
+    'Atualizado em ' + new Date(+y, +m - 1).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) + '.';
+})();
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const header = document.querySelector('header');
+const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 24);
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Particle wave — same motif as the LinkedIn banner
+(function wave() {
+  const canvas = document.getElementById('wave');
+  const ctx = canvas.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w, h, cols;
+  const rows = 24;
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(w / 8);
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h);
+    for (let r = 0; r < rows; r++) {
+      const d = r / rows;
+      const base = h * (0.3 + d * 0.5), amp = h * (0.08 + d * 0.1);
+      for (let c = 0; c < cols; c++) {
+        const nx = c / cols;
+        const y = base + Math.sin(nx * 5 + t * 0.0003 + r * 0.22) * amp + Math.sin(nx * 11 - t * 0.0002 + r * 0.5) * amp * 0.25;
+        const a = Math.max(0.04, (0.08 + d * 0.55) * (0.55 + 0.45 * Math.sin(nx * 3 + r)));
+        ctx.fillStyle = 'rgba(240,106,53,' + a.toFixed(3) + ')';
+        const s = 0.6 + d * 1.1;
+        ctx.fillRect(nx * w, y, s, s);
+      }
+    }
+  }
+  function loop(t) { draw(t); requestAnimationFrame(loop); }
+  resize();
+  addEventListener('resize', () => { resize(); if (reduce) draw(0); });
+  reduce ? draw(0) : requestAnimationFrame(loop);
+})();
+</script>
+</body>
 </html>
